@@ -16,8 +16,8 @@ Sklearn
 In order to run the models on each of the datasets, you need to download the corresponding dataset and place it into a folder called 'data' into the main directory. Then use the following instruction to run the models using run.sh:
 1. pass the name of the dataset you want to run the experiment on (assume CIFAR10 here)
 2. For that specific dataset (CIFAR10 here), open the training code (in the case of AD-CGAN, train_CAD.py) and choose whether you like to run soft/hard experiments.
-3. In order to choose soft/hard: in the dataloader (line 84-104 for CIFAR10), change the relation sign to == for the soft and != for the hard experiment.
-4. Choose the c_ind / c_ood depending on the soft/hard experiment as the value for -cl
+3. In order to choose soft/hard: in the dataloader (line 101-130 for CIFAR10), change the relation sign to == for the soft and != for the hard experiment.
+4. Choose the c_ind / c_ood depending on the soft/hard experiment as the value for the argument "--class_label" / "-cl"
 5. Use the following sample to run the code from the command line
 
 ```python
@@ -25,11 +25,10 @@ python train_CAD.py -ds CIFAR10 -cl 0 -z 100 -ep 5 -wep 0 -lr 0.0003 -elr 0.0002
 ```
 
 Instruction on downloading the datasets (MNIST, CIFAR10, FashionMNIST):
-For each of the following datasets, change the default value for the argument "--download" to True.
+For each of the following datasets, change the default value for the argument "--download" / "-dl" to True.
 ```python
 parser.add_argument('-dl', '--download', default='False', help='download the datasets')
 ```
-
 
 For CatsVsDogs please download the dataset through the following link and place it into the 'data/CatsVsDogs' folder!
 https://www.microsoft.com/en-us/download/confirmation.aspx?id=54765
