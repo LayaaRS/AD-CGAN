@@ -2,14 +2,13 @@
 
 This work was accepted in the 21st International Conference on Image Analysis and Processing (ICIAP2021)
 
-This repository includes Python codes for reproducing the results of [our paper](ttps://link.springer.com/chapter/10.1007/978-3-031-06427-2_27) alongwith Five other baselines referenced here.
+This repository includes Python codes for reproducing the results of [our paper](ttps://link.springer.com/chapter/10.1007/978-3-031-06427-2_27) alongwith Five other baselines referenced here. For [TIAE](https://ieeexplore.ieee.org/stamp/stamp.jsp?arnumber=9376856), we used their original PyTorch code from [their repository](https://github.com/wogong/pt-tiae). 
 
 ## Requirements:
 
 PyTorch 1.7
 
 Sklearn
-
 
 
 ## Instruction to Run:
