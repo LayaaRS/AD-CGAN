@@ -2,7 +2,7 @@ import torch
 import torch.nn.functional as F
 from torch.autograd import Variable
 
-device = torch.device('cuda')
+device = torch.device("cuda")
 cuda = torch.cuda.is_available()
 
 
@@ -31,15 +31,19 @@ def gradient_penalty(critic, real_data, generated_data, gp_weight):
     prob_interpolated, _, _ = critic(interpolated)
 
     # Calculate gradients of probabilities with respect to examples
-    gradients = torch.autograd.grad(outputs=prob_interpolated, inputs=interpolated,
-                                    grad_outputs=torch.ones(prob_interpolated.size()).cuda()
-                                    if cuda else torch.ones(prob_interpolated.size()),
-                                    create_graph=True, retain_graph=True)[0]
+    gradients = torch.autograd.grad(
+        outputs=prob_interpolated,
+        inputs=interpolated,
+        grad_outputs=torch.ones(prob_interpolated.size()).cuda(
+        ) if cuda else torch.ones(prob_interpolated.size()),
+        create_graph=True,
+        retain_graph=True,
+    )[0]
 
     # Gradients have shape (batch_size, num_channels, img_width, img_height),
     # so flatten to easily take norm per example in batch
     gradients = gradients.view(batch_size, -1)
-#         losses['gradient_norm'].append(gradients.norm(2, dim=1).mean().data[0])
+    #         losses['gradient_norm'].append(gradients.norm(2, dim=1).mean().data[0])
 
     # Derivatives of the gradient close to 0 can cause problems because of
     # the square root, so manually calculate norm and add epsilon
@@ -78,8 +82,9 @@ def infonce_loss(l, m):
     n_mask = 1 - mask
 
     # Masking is done by shifting the diagonal before exp.
-    u_n = (n_mask * u_n) - (10. * (mask))  # (1 - n_mask)
-    u_n = u_n.reshape(N, N * n_locals, n_multis).unsqueeze(dim=1).expand(-1, n_locals, -1, -1)
+    u_n = (n_mask * u_n) - (10.0 * (mask))  # (1 - n_mask)
+    u_n = u_n.reshape(
+        N, N * n_locals, n_multis).unsqueeze(dim=1).expand(-1, n_locals, -1, -1)
 
     pred_lgt = torch.cat([u_p, u_n], dim=2)
     pred_log = torch.nn.functional.log_softmax(pred_lgt, dim=2)

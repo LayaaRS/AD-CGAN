@@ -1,6 +1,10 @@
 import torch
+from torch.optim.optimizer import Optimizer, required
 
+from torch.autograd import Variable
+import torch.nn.functional as F
 from torch import nn
+from torch import Tensor
 from torch.nn import Parameter
 
 
@@ -12,7 +16,7 @@ class SpectralNorm(nn.Module):
     def __init__(self, module, power_iterations=1):
         super(SpectralNorm, self).__init__()
         self.module = module
-        self.name = 'weight'
+        self.name = "weight"
         self.power_iterations = power_iterations
         if not self._made_params():
             self._make_params()
@@ -24,7 +28,8 @@ class SpectralNorm(nn.Module):
 
         height = w.data.shape[0]
         for _ in range(self.power_iterations):
-            v.data = l2normalize(torch.mv(torch.t(w.view(height, -1).data), u.data))
+            v.data = l2normalize(
+                torch.mv(torch.t(w.view(height, -1).data), u.data))
             u.data = l2normalize(torch.mv(w.view(height, -1).data, v.data))
 
         # sigma = torch.dot(u.data, torch.mv(w.view(height,-1).data, v.data))
